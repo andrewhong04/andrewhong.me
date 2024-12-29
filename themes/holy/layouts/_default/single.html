@@ -10,6 +10,7 @@
             <time>{{ .Lastmod | time.Format (":date_medium") }}</time>
             {{ end }}
             {{- end -}}
+            - {{ .Params.client }}
         </div>
     </header>
     {{- partial "prose.html" . -}}

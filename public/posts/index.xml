@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on Andrew</title>
+    <link>http://localhost:1313/posts/</link>
+    <description>Recent content in Posts on Andrew</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 12 Jun 2024 14:46:15 -0400</lastBuildDate>
+    <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Shrunk</title>
+      <link>http://localhost:1313/posts/shrunk-revamp/</link>
+      <pubDate>Wed, 12 Jun 2024 14:46:15 -0400</pubDate>
+      <guid>http://localhost:1313/posts/shrunk-revamp/</guid>
+      <description>&lt;h2 id=&#34;modernizing&#34;&gt;Modernizing&lt;/h2&gt;&#xA;&lt;p&gt;At Rutgers University, I was tasked with maintaining the URL Shortener used by faculty and professors.&lt;/p&gt;&#xA;&lt;p&gt;Previously, to run the developer version of the full-stack project on your machine, you had to have two terminal tabs open while following a long set of build instructions. I stepped in and introduced Docker into the project so the only command you have to remember one command to build the project.&lt;/p&gt;&#xA;&lt;p&gt;&lt;img src=&#34;http://localhost:1313/images/shrunk-docker.png&#34; alt=&#34;Docker running Shrunk&#34;&gt;&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
