@@ -6,6 +6,7 @@ import ArrowCard from "@components/ArrowCard.astro";
 import Link from "@components/Link.astro";
 import { dateRange } from "@lib/utils";
 import { SITE, HOME, SOCIALS } from "@consts";
+import { Image } from "astro:assets";
 
 const blog = (await getCollection("blog"))
   .filter(post => !post.data.draft)
@@ -48,7 +49,7 @@ const work = await Promise.all(
           </p>
           <p class="animate">
             Visit
-            <Link href="https://caridina.studio" aria-label="Astro Nano on Github" external>
+            <Link href="https://caridina.studio" aria-label="Caridina Studio Website" external>
               caridina.studio
             </Link>
             to learn more.
@@ -127,8 +128,7 @@ const work = await Promise.all(
         </h5>
         <article>
           <p>
-            If you want to get in touch with me about something or just to say hi,
-            reach out on social media or send me an email.
+            Here are a list of my socials.
           </p>
         </article>
         <ul class="flex flex-wrap gap-2">

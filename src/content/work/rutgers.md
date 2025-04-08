@@ -5,4 +5,4 @@ dateStart: "12/01/2022"
 dateEnd: "05/01/2026"
 ---
 
-Directing a team of seven for the development of the go.rutgers.edu website focusing on improving UI/UX and codebase maintainability.
+I am part of the Rutgers Open System Solutions division where I direct a team of seven people to modernize an old full-stack project to utilize modern technologies.
