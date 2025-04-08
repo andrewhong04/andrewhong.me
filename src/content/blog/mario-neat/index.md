@@ -1,9 +1,7 @@
 ---
-title: "Building a Genetic Algorithm from Nothing using Lua"
-description: ""
-date: "Apr 7 2025"
-demoURL: "https://github.com/andrewhong04/Mario-NEAT"
-repoURL: "https://github.com/andrewhong04/Mario-NEAT"
+title: "Building a Genetic Algorithm from Nothing to play Super Mario Bros"
+description: "This took 7 months during COVID-19."
+date: "Feb 12 2022"
 ---
 
 ![Mario-NEAT Demo](/mario-neat.gif)
