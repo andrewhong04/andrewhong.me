@@ -1,5 +1,6 @@
 {
   "name": "",
+  "packageManager": "npm@9.8.1",
   "type": "module",
   "version": "1.0.0",
   "scripts": {
