@@ -1,5 +1,5 @@
 ---
-title: "Building a Genetic Algorithm from the Ground-up using Methodology by University of Texas-Austin Professors"
+title: "Building a Genetic Algorithm from Nothing using Lua"
 description: ""
 date: "Apr 7 2025"
 demoURL: "https://github.com/andrewhong04/Mario-NEAT"
