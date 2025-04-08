@@ -18,6 +18,7 @@ What? A URL Shortener? Sounds like a simple project. If you incorporate the stat
 - [iCloud Private Relay](https://support.apple.com/en-us/102602) is not supported
 - Admin control panel is not optimized, it loads all the users before displaying them
 - Everything from API tokens, settings, and etc were stored in `config.py` instead of environment variables
+- Shrunk served some HTML files from Flask instead of React such as the login page, 404, etc
 
 ## New Design
 
