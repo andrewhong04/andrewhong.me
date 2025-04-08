@@ -1,5 +1,5 @@
 ---
-title: "Betta + Shrimps"
+title: "Betta and Shrimps"
 description: "Just a placeholder until I have something interesting to say."
 date: "Apr 7 2025"
 ---
