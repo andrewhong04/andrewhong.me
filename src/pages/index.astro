@@ -1,10 +1,9 @@
 ---
-import { type CollectionEntry, getCollection } from "astro:content";
+import { type CollectionEntry } from "astro:content";
 import PostPreview from "@/components/blog/PostPreview.astro";
 import { getAllPosts } from "@/data/post";
 import PageLayout from "@/layouts/Base.astro";
 import { collectionDateSort } from "@/utils/date";
-import SocialList from "@/components/SocialList.astro";
 
 // Posts
 const MAX_POSTS = 10;
@@ -19,9 +18,7 @@ const pinnedPosts = allPostsByDate.filter((p) => p.data.pinned).slice(0, MAX_PIN
 
 <PageLayout meta={{ title: "Home" }}>
 	<section>
-		<h1 class="title mb-12">Hello World!</h1>
-		<p class="mb-4">I am currently a senior at Rutgers University studying Computer Science.</p>
-		<SocialList />
+		<p>Today, I am currently a senior at Rutgers University studying Computer Science.</p>
 	</section>
 	{
 		pinnedPosts.length > 0 && (
@@ -38,7 +35,7 @@ const pinnedPosts = allPostsByDate.filter((p) => p.data.pinned).slice(0, MAX_PIN
 		)
 	}
 	<section class="mt-16">
-		<h2 class="title text-accent mb-6 text-xl"><a href="/posts/">Posts</a></h2>
+		<h2 class="title mb-6 text-xl"><a href="/posts/">Posts</a></h2>
 		<ul class="space-y-4" role="list">
 			{
 				latestPosts.map((p) => (
@@ -48,5 +45,11 @@ const pinnedPosts = allPostsByDate.filter((p) => p.data.pinned).slice(0, MAX_PIN
 				))
 			}
 		</ul>
+	</section>
+	<section class="mt-16">
+		<h2 class="title mb-6 text-xl">More</h2>
+		<p>
+			You can follow me on <a href="https://x.com/andrew_hong_" class="cactus-link">Twitter</a>.
+		</p>
 	</section>
 </PageLayout>

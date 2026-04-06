@@ -1,0 +1,29 @@
+---
+import FormattedDate from "@/components/FormattedDate.astro";
+
+interface Props {
+	src: string;
+	title: string;
+	description?: string;
+	date?: Date;
+}
+
+const { src, title, description, date } = Astro.props;
+
+const ext = src.split(".").pop()?.toLowerCase();
+const typeMap: Record<string, string> = {
+	mp4: "video/mp4",
+	webm: "video/webm",
+	ogg: "video/ogg",
+	mov: "video/quicktime",
+};
+const mimeType = ext ? typeMap[ext] : undefined;
+---
+
+<div class="grid gap-2">
+	{date && <FormattedDate class="font-semibold text-gray-600 dark:text-gray-400" date={date} />}
+	<video class="bg-global-text/5 aspect-video w-full rounded-md" controls preload="metadata">
+		<source src={src} type={mimeType} />
+	</video>
+	{description && <p class="text-sm text-gray-600 italic dark:text-gray-400">{description}</p>}
+</div>

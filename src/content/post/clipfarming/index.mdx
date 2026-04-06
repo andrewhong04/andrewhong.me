@@ -1,0 +1,47 @@
+---
+title: "Creating an Automated Workflow for Clip Farming"
+description: "Here is my journey of creating a clipfarm program."
+publishDate: "April 6 2026"
+tags: ["gemma", "whisper", "ollama"]
+pinned: false
+---
+import VideoPreview from "@/components/VideoPreview.astro";
+
+## Introduction
+
+I always encountered Minecraft videos when scrolling through YouTube Shorts from content creators such as [DrDonut](https://www.youtube.com/DrDonutt), [JudeLow](https://www.youtube.com/@JudeLoSasso), and some clips from the UnstableSMP.
+
+I personally never watch streamers when they're live so I could never pump out clips on YouTube Shorts consistently, but I always thought that this could be automated such as searching for clips to editing them. With the release of artificial intelligence and my time all freed up, I can finally put make this idea to use and maybe make some money.
+
+Here were my requirements for this project:
+1. Everything should be able to run on a single computer (including the AI models)
+2. It should take 30 minutes to pump out 5 new videos
+
+## Development
+
+I wasn't sure on how to actually implement everything, so I separated the project into 3 different subprojects:
+1. A process that watches YouTube streams (let's call this the "worker")
+2. The backend that can start the processes mentioned above
+3. The frontend to interact with the backend
+
+### Building the Minimal Viable Product
+
+Implementing the worker process was a little difficult since this was the only thing that was new to me at the time. I used [uv](https://github.com/astral-sh/uv) to manage the Python dependencies and used [OpenAI's Whisper](https://openai.com/index/whisper/) to transcribe the audio from an audio stream given from [Streamlink](https://github.com/streamlink/streamlink). The transcribed text was later then fed to [Meta's llamma3.2](https://ollama.com/library/llama3.2) model to determine if the audio was clip-worthy or not. However this was not enough to determine if a clip is high quality enough to be uploaded to a short-form content platform.
+
+You can see the program working somewhat perfectly transcribing [Farex](https://www.youtube.com/@Farex_x)'s YouTube stream.
+
+<VideoPreview
+  src="/videos/clip-of-farex-talking-with-transcript.mp4"
+/>
+
+**The result was straight trash.** My program couldn't tell exactly who was speaking since there was proximity chat on some of the Minecraft servers the streamers were playing on, it was clipping random moments such as boring conversations, or even completely misunderstanding what is going on in the stream.
+
+The following is the only video that is worth clipping out of the hundreds that have been clipped from [lerdi](https://www.youtube.com/@lerdidonutsmp)'s YouTube stream. The worst part is that the program clipped it for a completely different reason because it misinterpreted what the streamer was saying.
+
+<VideoPreview
+  src="/videos/clip-of-lerdi-trapping-himself.webm"
+/>
+
+### The Next Steps
+
+I was about to give up on this project until I did a little bit more research which led me to discover that Google DeepMind released an open model called [Gemma](https://deepmind.google/models/gemma/) and Alibaba Cloud (阿里云) has released their own called [Qwen](https://qwen.ai/blog?id=qwen3.5). The difference between these and OpenAI's Whisper is that these models analyze video and audio together which could be game-changing for my clipfarmer.

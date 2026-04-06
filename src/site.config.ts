@@ -25,13 +25,17 @@ export const siteConfig: SiteConfig = {
 		- The link value found in src/components/layout/Header.astro L:35
 		- In the footer found in src/components/layout/Footer.astro L:12
 	*/
-	title: "Andrew's Blog",
+	title: "Andrew Hong",
 	// ! Please remember to replace the following site property with your own domain, used in astro.config.ts
 	url: "https://andrewhong.me/",
 };
 
 // Used to generate links in both the Header & Footer.
-export const menuLinks: { path: string; title: string }[] = [];
+export const menuLinks: { path: string; title: string }[] = [
+	{ path: "/", title: "Home" },
+	{ path: "/posts/", title: "Blog" },
+	{ path: "/tags/", title: "Tags" },
+];
 
 // https://expressive-code.com/reference/configuration/
 export const expressiveCodeOptions: AstroExpressiveCodeOptions = {

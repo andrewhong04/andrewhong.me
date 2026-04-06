@@ -8,12 +8,13 @@
 
 /* you could refactor below to use light-dark(), depending on your target audience */
 @theme {
-	--color-global-bg: oklch(98.48% 0 0);
-	--color-global-text: oklch(26.99% 0.0096 235.05);
-	--color-link: oklch(55.44% 0.0431 185.69);
-	--color-accent: oklch(55.27% 0.195 19.06);
-	--color-accent-2: oklch(18.15% 0 0);
-	--color-quote: oklch(55.27% 0.195 19.06);
+	/* Light mode — soft white with a cyan tint */
+	--color-global-bg: oklch(97% 0.012 192);
+	--color-global-text: oklch(22% 0.03 210);
+	--color-link: oklch(56% 0.13 192);
+	--color-accent: oklch(62% 0.15 192);
+	--color-accent-2: oklch(18% 0.02 210);
+	--color-quote: oklch(62% 0.15 192);
 }
 
 @layer base {
@@ -27,13 +28,14 @@
 		}
 
 		&[data-theme="dark"] {
+			/* Dark mode — deep navy with Miku teal accents */
 			color-scheme: dark;
-			--color-global-bg: oklch(23.64% 0.0045 248);
-			--color-global-text: oklch(83.54% 0 264);
-			--color-link: oklch(70.44% 0.1133 349);
-			--color-accent: oklch(70.91% 0.1415 163.7);
-			--color-accent-2: oklch(94.66% 0 0);
-			--color-quote: oklch(94.8% 0.106 136.49);
+			--color-global-bg: oklch(17% 0.025 225);
+			--color-global-text: oklch(88% 0.03 192);
+			--color-link: oklch(72% 0.14 192);
+			--color-accent: oklch(72% 0.14 192);
+			--color-accent-2: oklch(93% 0.01 192);
+			--color-quote: oklch(80% 0.12 192);
 		}
 	}
 
@@ -41,11 +43,7 @@
 		scroll-margin-block: 5ex;
 	}
 
-	@view-transition {
-		navigation: auto;
-	}
-
-	/* Astro image responsive styles, modified from -> https://docs.astro.build/en/guides/images/#responsive-image-styles */
+/* Astro image responsive styles, modified from -> https://docs.astro.build/en/guides/images/#responsive-image-styles */
 	:where([data-astro-image]) {
 		object-fit: var(--fit);
 		object-position: var(--pos);
