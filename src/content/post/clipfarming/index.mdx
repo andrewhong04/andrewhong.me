@@ -15,6 +15,8 @@ I personally never watch streamers when they're live so I could never pump out c
 
 I had two requirements for this project: everything should be able to run on a single computer (including the AI models) and it should take 30 minutes inspect the clips to pump out 5 new videos. You might ask, why not rent out GPU processing power from big cloud companies such as Amazon Web Services or Google Cloud? As of April 2026 for 24GB of NVIDIA VRAM, it would cost around $220 per month to run a [`g6.2xlarge` instance provided by Amazon Web Services](https://aws.amazon.com/ec2/instance-types/g6/) 8 hours a day all month, I haven't even bothered to check how much it would cost to run it on Google Cloud.
 
+A question I've also been asked is will I open source the code and the more details about the infrastructure? I probably won't beyond the scope of this article.
+
 ## Development
 
 I wasn't sure on how to actually implement everything, so I separated the project into 3 different subprojects:
