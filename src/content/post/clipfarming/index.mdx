@@ -11,7 +11,7 @@ import VideoPreview from "@/components/VideoPreview.astro";
 
 I always encountered Minecraft videos when scrolling through YouTube Shorts from content creators such as [DrDonut](https://www.youtube.com/DrDonutt), [JudeLow](https://www.youtube.com/@JudeLoSasso), and some clips from the UnstableSMP.
 
-I personally never watch streamers when they're live so I could never create clips on YouTube Shorts consistently, but I always thought that this could be automated such as searching for clips to editing them. With the release of artificial intelligence and my time all freed up, I can finally put this idea to use and maybe learn how to integrate artificial intelligence into workflows.
+I personally never watch streamers when they're live so I could never manually create clips on YouTube Shorts consistently, but I always thought that this could be automated such as searching for clips to editing them. With the release of artificial intelligence and my time all freed up, I can finally put this idea to use and learn how to integrate artificial intelligence into workflows.
 
 I had two requirements for this project: everything should be able to run on a single computer (including the AI models) and it should take 30 minutes inspect the clips to create out 5 new videos. You might ask, why not rent out GPU processing power from big cloud companies such as Amazon Web Services or Google Cloud? As of April 2026 for 24GB of NVIDIA VRAM, it would cost around $220 per month to run a [`g6.2xlarge` instance provided by Amazon Web Services](https://aws.amazon.com/ec2/instance-types/g6/) 8 hours a day all month, I haven't even bothered to check how much it would cost to run it on Google Cloud.
 
@@ -27,6 +27,8 @@ I wasn't sure on how to actually implement everything, so I separated the projec
 ### Building the Minimal Viable Product
 
 Implementing the worker process was a little difficult since this was the only thing that was new to me at the time. I used [uv](https://github.com/astral-sh/uv) to manage the Python dependencies and used [OpenAI's Whisper](https://openai.com/index/whisper/) to transcribe the audio from an audio stream given from [Streamlink](https://github.com/streamlink/streamlink). The transcribed text was later then fed to [Meta's llamma3.2](https://ollama.com/library/llama3.2) model to determine if the audio was clip-worthy or not. However this was not enough to determine if a clip is high quality enough to be uploaded to a short-form content platform.
+
+For now I only put support for YouTube streams since most streamers on YouTube upload their entire stream on YouTube for anyone to see. After the stream ends, I can easily download the full-quality using [yt-dlp](https://github.com/yt-dlp/yt-dlp).
 
 You can see the program working somewhat perfectly transcribing [Farex](https://www.youtube.com/@Farex_x)'s YouTube stream.
 
@@ -45,3 +47,5 @@ The following is the only video that is worth clipping out of the hundreds that 
 ### The Next Steps
 
 I was about to give up on this project until I did a little bit more research which led me to discover that Google DeepMind released an open model called [Gemma](https://deepmind.google/models/gemma/) and Alibaba Cloud (阿里云) has released their own called [Qwen](https://qwen.ai/blog?id=qwen3.5). The difference between these and OpenAI's Whisper is that these models analyze video and audio together which could be game-changing for my clipfarmer.
+
+![32gb-used.png](32gb-used.png)
