@@ -7,6 +7,7 @@ pinned: false
 draft: true
 ---
 import VideoPreview from "@/components/VideoPreview.astro";
+import LineChart from "@/components/LineChart.astro";
 
 The following post is adapted from multiple high-school and college essays I've written many years ago. I've decided to publish it here as a way to forever document my work on the internet as I've planned on publishing a YouTube video in the past but never got around to it.
 
@@ -21,3 +22,28 @@ Onto the technical explanation, the program is coded in LUA using the FCEUX64 em
 The program begins with 300 neural networks in generation number 1, which I’ll call genomes. It starts out with no information on how to play the game, but it’ll eventually learn how to move forward.
 This will increase its fitness score which is used to determine if that genome is worthy enough to move on to the next generation, similar to how evolution works. To promote diversity of neural networks, all genomes that are similar to each other are grouped together to optimize their structures.
 The link below the emulator’s screen is the source code if you want to see how I did it.
+
+<LineChart
+  title="Highest fitness per generation"
+  xLabel="Generation ID"
+  yLabel="Highest Fitness"
+  data={[
+    { x: 1, y: 688 },
+    { x: 2, y: 710 },
+    { x: 3, y: 818 },
+    { x: 4, y: 1267 },
+    { x: 5, y: 1630 },
+    { x: 6, y: 1630 },
+    { x: 7, y: 1630 },
+    { x: 8, y: 1630 },
+    { x: 9, y: 1637 },
+    { x: 10, y: 1637 },
+    { x: 11, y: 2731 },
+    { x: 12, y: 2731 },
+    { x: 13, y: 2731 },
+    { x: 14, y: 3451 },
+    { x: 15, y: 3451 },
+    { x: 16, y: 3451 },
+    { x: 17, y: 3500 },
+  ]}
+/>

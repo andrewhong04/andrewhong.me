@@ -1,0 +1,256 @@
+---
+interface DataPoint {
+	x: number;
+	y: number;
+}
+
+interface Props {
+	data: DataPoint[];
+	title: string;
+	xLabel?: string;
+	yLabel?: string;
+}
+
+const { data, title, xLabel = "Generation ID", yLabel = "Highest Fitness" } = Astro.props;
+
+const width = 640;
+const height = 320;
+// Plot bleeds edge-to-edge horizontally (0..width) so the line matches the
+// surrounding text column. No axis-number labels are rendered (see below),
+// so no left gutter is reserved for them.
+const margin = { top: 26, right: 0, bottom: 32, left: 0 };
+const plotWidth = width - margin.left - margin.right;
+const plotHeight = height - margin.top - margin.bottom;
+
+const xs = data.map((d) => d.x);
+const ys = data.map((d) => d.y);
+const xMin = Math.min(...xs);
+const xMax = Math.max(...xs);
+const yTickStep = 1000;
+const yMax = Math.ceil(Math.max(...ys) / yTickStep) * yTickStep;
+const yMin = 0;
+
+const xScale = (x: number) => margin.left + ((x - xMin) / (xMax - xMin)) * plotWidth;
+const yScale = (y: number) => margin.top + plotHeight - ((y - yMin) / (yMax - yMin)) * plotHeight;
+
+const points = data.map((d) => ({ x: d.x, y: d.y, px: xScale(d.x), py: yScale(d.y) }));
+const linePath = points.map((p, i) => `${i === 0 ? "M" : "L"}${p.px.toFixed(2)},${p.py.toFixed(2)}`).join(" ");
+
+const yTicks = Array.from({ length: yMax / yTickStep + 1 }, (_, i) => i * yTickStep);
+const last = points[points.length - 1];
+
+const chartId = `line-chart-${Math.random().toString(36).slice(2, 9)}`;
+---
+
+<figure class="my-6">
+	<figcaption class="text-global-text/80 mb-2 text-sm font-semibold">{title}</figcaption>
+	<line-chart
+		id={chartId}
+		class="not-prose relative block"
+		data-points={JSON.stringify(points.map((p) => ({ x: p.x, y: p.y, px: p.px, py: p.py })))}
+		data-plot={JSON.stringify({ left: margin.left, right: width - margin.right, top: margin.top, bottom: height - margin.bottom })}
+	>
+		<svg
+			viewBox={`0 0 ${width} ${height}`}
+			class="h-auto w-full overflow-visible"
+			role="img"
+			aria-label={`${title}. ${yLabel} by ${xLabel}.`}
+		>
+			<!-- gridlines (no numeric labels: avoids any risk of clipping in a
+			     narrow left/right gutter on mobile; values are still reachable
+			     via the hover/focus tooltip and the end-of-line direct label) -->
+			{
+				yTicks.map((tick) => {
+					const y = yScale(tick);
+					return (
+						<line
+							x1={margin.left}
+							x2={width - margin.right}
+							y1={y}
+							y2={y}
+							stroke="color-mix(in oklch, var(--color-global-text) 12%, transparent)"
+							stroke-width="1"
+						/>
+					);
+				})
+			}
+
+			<!-- x ticks (first/last anchor inward so the digits stay on-canvas at the flush edges) -->
+			{
+				points.map((p, i) => (
+					<text
+						x={p.px}
+						y={height - margin.bottom + 18}
+						text-anchor={i === 0 ? "start" : i === points.length - 1 ? "end" : "middle"}
+						font-size="10"
+						fill="color-mix(in oklch, var(--color-global-text) 55%, transparent)"
+					>
+						{p.x}
+					</text>
+				))
+			}
+
+			<!-- x-axis label -->
+			<text
+				x={width / 2}
+				y={height - 2}
+				text-anchor="middle"
+				font-size="11"
+				fill="color-mix(in oklch, var(--color-global-text) 70%, transparent)"
+			>
+				{xLabel}
+			</text>
+
+			<!-- line -->
+			<path d={linePath} fill="none" stroke="var(--color-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+
+			<!-- data points -->
+			{
+				points.map((p) => (
+					<circle cx={p.px} cy={p.py} r="3" fill="var(--color-accent)" stroke="var(--color-global-bg)" stroke-width="2" />
+				))
+			}
+
+			<!-- end marker + direct label -->
+			{
+				last && (
+					<>
+						<circle cx={last.px} cy={last.py} r="5" fill="var(--color-accent)" stroke="var(--color-global-bg)" stroke-width="2" />
+						<text x={last.px} y={last.py - 12} text-anchor="end" font-size="12" font-weight="600" fill="var(--color-global-text)">
+							{last.y.toLocaleString()}
+						</text>
+					</>
+				)
+			}
+
+			<!-- crosshair (hidden until hover) -->
+			<line data-crosshair y1={margin.top} y2={height - margin.bottom} stroke="color-mix(in oklch, var(--color-global-text) 30%, transparent)" stroke-width="1" class="hidden" />
+			<circle data-hover-dot r="5" fill="var(--color-accent)" stroke="var(--color-global-bg)" stroke-width="2" class="hidden" />
+
+			<!-- hover overlay -->
+			<rect
+				data-overlay
+				x={margin.left}
+				y={margin.top}
+				width={plotWidth}
+				height={plotHeight}
+				fill="transparent"
+				tabindex="0"
+				role="img"
+				aria-label={`Interactive chart: ${title}. Use arrow keys to inspect data points.`}
+			/>
+
+			<!-- tooltip -->
+			<g data-tooltip class="hidden">
+				<rect data-tooltip-bg width="98" height="40" rx="4" fill="var(--color-global-bg)" stroke="color-mix(in oklch, var(--color-global-text) 20%, transparent)" stroke-width="1" />
+				<text data-tooltip-label x="10" y="16" font-size="10" fill="color-mix(in oklch, var(--color-global-text) 65%, transparent)"></text>
+				<text data-tooltip-value x="10" y="31" font-size="13" font-weight="600" fill="var(--color-global-text)"></text>
+			</g>
+		</svg>
+	</line-chart>
+</figure>
+
+<script>
+	interface Point {
+		x: number;
+		y: number;
+		px: number;
+		py: number;
+	}
+
+	class LineChartElement extends HTMLElement {
+		private points: Point[] = [];
+		private plot: { left: number; right: number; top: number; bottom: number } = { left: 0, right: 0, top: 0, bottom: 0 };
+		private index = 0;
+
+		connectedCallback() {
+			this.points = JSON.parse(this.dataset.points ?? "[]");
+			this.plot = JSON.parse(this.dataset.plot ?? "{}");
+
+			const svg = this.querySelector<SVGSVGElement>("svg");
+			const overlay = this.querySelector<SVGRectElement>("[data-overlay]");
+			if (!svg || !overlay || this.points.length === 0) return;
+
+			const toSvgPoint = (clientX: number) => {
+				const pt = svg.createSVGPoint();
+				pt.x = clientX;
+				pt.y = 0;
+				const ctm = svg.getScreenCTM();
+				if (!ctm) return this.plot.left;
+				return pt.matrixTransform(ctm.inverse()).x;
+			};
+
+			const nearestIndex = (svgX: number) => {
+				let closest = 0;
+				let closestDist = Infinity;
+				this.points.forEach((p, i) => {
+					const dist = Math.abs(p.px - svgX);
+					if (dist < closestDist) {
+						closestDist = dist;
+						closest = i;
+					}
+				});
+				return closest;
+			};
+
+			const show = (i: number) => {
+				this.index = i;
+				const p = this.points[i];
+				if (!p) return;
+
+				const crosshair = this.querySelector<SVGLineElement>("[data-crosshair]");
+				const hoverDot = this.querySelector<SVGCircleElement>("[data-hover-dot]");
+				const tooltip = this.querySelector<SVGGElement>("[data-tooltip]");
+				const tooltipBg = this.querySelector<SVGRectElement>("[data-tooltip-bg]");
+				const tooltipLabel = this.querySelector<SVGTextElement>("[data-tooltip-label]");
+				const tooltipValue = this.querySelector<SVGTextElement>("[data-tooltip-value]");
+				if (!crosshair || !hoverDot || !tooltip || !tooltipBg || !tooltipLabel || !tooltipValue) return;
+
+				crosshair.setAttribute("x1", String(p.px));
+				crosshair.setAttribute("x2", String(p.px));
+				crosshair.classList.remove("hidden");
+
+				hoverDot.setAttribute("cx", String(p.px));
+				hoverDot.setAttribute("cy", String(p.py));
+				hoverDot.classList.remove("hidden");
+
+				tooltipLabel.textContent = `Gen ${p.x}`;
+				tooltipValue.textContent = p.y.toLocaleString();
+
+				const boxWidth = Number(tooltipBg.getAttribute("width"));
+				const boxHeight = Number(tooltipBg.getAttribute("height"));
+				const flipLeft = p.px + 12 + boxWidth > this.plot.right;
+				const tx = flipLeft ? p.px - 12 - boxWidth : p.px + 12;
+				const ty = Math.max(this.plot.top, p.py - boxHeight - 8);
+				tooltip.setAttribute("transform", `translate(${tx}, ${ty})`);
+				tooltip.classList.remove("hidden");
+			};
+
+			const hide = () => {
+				this.querySelector("[data-crosshair]")?.classList.add("hidden");
+				this.querySelector("[data-hover-dot]")?.classList.add("hidden");
+				this.querySelector("[data-tooltip]")?.classList.add("hidden");
+			};
+
+			overlay.addEventListener("pointermove", (e) => {
+				show(nearestIndex(toSvgPoint(e.clientX)));
+			});
+			overlay.addEventListener("pointerleave", hide);
+			overlay.addEventListener("focus", () => show(this.index));
+			overlay.addEventListener("blur", hide);
+			overlay.addEventListener("keydown", (e) => {
+				if (e.key === "ArrowRight") {
+					e.preventDefault();
+					show(Math.min(this.index + 1, this.points.length - 1));
+				} else if (e.key === "ArrowLeft") {
+					e.preventDefault();
+					show(Math.max(this.index - 1, 0));
+				} else if (e.key === "Escape") {
+					hide();
+				}
+			});
+		}
+	}
+
+	customElements.define("line-chart", LineChartElement);
+</script>
