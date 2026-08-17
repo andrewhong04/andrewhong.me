@@ -1,0 +1,23 @@
+---
+title: "Evolving Neural Networks for Super Mario"
+description: "Building from mathematical algorithms to neural network implementations from the ground up."
+publishDate: "October 28 2021"
+tags: ["genetic algorithms", "neural networks", "artificial intelligence"]
+pinned: false
+draft: true
+---
+import VideoPreview from "@/components/VideoPreview.astro";
+
+The following post is adapted from multiple high-school and college essays I've written many years ago. I've decided to publish it here as a way to forever document my work on the internet as I've planned on publishing a YouTube video in the past but never got around to it.
+
+<VideoPreview
+  autoplay
+  src="/videos/mario-playing-fast-forwarded.mp4"
+/>
+
+Technical Explanation (45 seconds)
+
+Onto the technical explanation, the program is coded in LUA using the FCEUX64 emulator. The connections and hidden nodes are not being shown since there are performance issues if the emulator shows too many lines at once.
+The program begins with 300 neural networks in generation number 1, which I’ll call genomes. It starts out with no information on how to play the game, but it’ll eventually learn how to move forward.
+This will increase its fitness score which is used to determine if that genome is worthy enough to move on to the next generation, similar to how evolution works. To promote diversity of neural networks, all genomes that are similar to each other are grouped together to optimize their structures.
+The link below the emulator’s screen is the source code if you want to see how I did it.
