@@ -16,9 +16,10 @@ const { data, title, xLabel = "Generation ID", yLabel = "Highest Fitness" } = As
 const width = 640;
 const height = 320;
 // Plot bleeds edge-to-edge horizontally (0..width) so the line matches the
-// surrounding text column. No axis-number labels are rendered (see below),
-// so no left gutter is reserved for them.
-const margin = { top: 26, right: 0, bottom: 24, left: 0 };
+// surrounding text column. No axis-number labels are rendered at all (see
+// below), so there's no left/bottom gutter reserved for them — exact values
+// are reachable via the hover/focus tooltip and the end-of-line direct label.
+const margin = { top: 26, right: 0, bottom: 8, left: 0 };
 const plotWidth = width - margin.left - margin.right;
 const plotHeight = height - margin.top - margin.bottom;
 
@@ -73,21 +74,6 @@ const chartId = `line-chart-${Math.random().toString(36).slice(2, 9)}`;
 						/>
 					);
 				})
-			}
-
-			<!-- x ticks (first/last anchor inward so the digits stay on-canvas at the flush edges) -->
-			{
-				points.map((p, i) => (
-					<text
-						x={p.px}
-						y={height - margin.bottom + 14}
-						text-anchor={i === 0 ? "start" : i === points.length - 1 ? "end" : "middle"}
-						font-size="10"
-						fill="color-mix(in oklch, var(--color-global-text) 55%, transparent)"
-					>
-						{p.x}
-					</text>
-				))
 			}
 
 			<!-- line -->
