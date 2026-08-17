@@ -6,9 +6,10 @@ interface Props {
 	title: string;
 	description?: string;
 	date?: Date;
+	autoplay?: boolean;
 }
 
-const { src, title, description, date } = Astro.props;
+const { src, title, description, date, autoplay = false } = Astro.props;
 
 const ext = src.split(".").pop()?.toLowerCase();
 const typeMap: Record<string, string> = {
@@ -22,7 +23,14 @@ const mimeType = ext ? typeMap[ext] : undefined;
 
 <div class="grid gap-2">
 	{date && <FormattedDate class="font-semibold text-gray-600 dark:text-gray-400" date={date} />}
-	<video class="bg-global-text/5 aspect-video w-full rounded-md" controls preload="metadata">
+	<video
+		class="bg-global-text/5 aspect-video w-full rounded-md"
+		controls={!autoplay}
+		preload="metadata"
+		autoplay={autoplay}
+		muted={autoplay}
+		playsinline={autoplay}
+	>
 		<source src={src} type={mimeType} />
 	</video>
 	{description && <p class="text-sm text-gray-600 italic dark:text-gray-400">{description}</p>}
