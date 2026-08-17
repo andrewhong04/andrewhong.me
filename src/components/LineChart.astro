@@ -18,7 +18,7 @@ const height = 320;
 // Plot bleeds edge-to-edge horizontally (0..width) so the line matches the
 // surrounding text column. No axis-number labels are rendered (see below),
 // so no left gutter is reserved for them.
-const margin = { top: 26, right: 0, bottom: 32, left: 0 };
+const margin = { top: 26, right: 0, bottom: 24, left: 0 };
 const plotWidth = width - margin.left - margin.right;
 const plotHeight = height - margin.top - margin.bottom;
 
@@ -80,7 +80,7 @@ const chartId = `line-chart-${Math.random().toString(36).slice(2, 9)}`;
 				points.map((p, i) => (
 					<text
 						x={p.px}
-						y={height - margin.bottom + 18}
+						y={height - margin.bottom + 14}
 						text-anchor={i === 0 ? "start" : i === points.length - 1 ? "end" : "middle"}
 						font-size="10"
 						fill="color-mix(in oklch, var(--color-global-text) 55%, transparent)"
@@ -89,17 +89,6 @@ const chartId = `line-chart-${Math.random().toString(36).slice(2, 9)}`;
 					</text>
 				))
 			}
-
-			<!-- x-axis label -->
-			<text
-				x={width / 2}
-				y={height - 2}
-				text-anchor="middle"
-				font-size="11"
-				fill="color-mix(in oklch, var(--color-global-text) 70%, transparent)"
-			>
-				{xLabel}
-			</text>
 
 			<!-- line -->
 			<path d={linePath} fill="none" stroke="var(--color-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
