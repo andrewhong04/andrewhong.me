@@ -4,7 +4,7 @@ description: "Building from mathematical algorithms to neural network implementa
 publishDate: "October 28 2021"
 tags: ["genetic algorithms", "neural networks", "artificial intelligence"]
 pinned: false
-draft: true
+draft: false
 ---
 import VideoPreview from "@/components/VideoPreview.astro";
 import LineChart from "@/components/LineChart.astro";
@@ -16,15 +16,12 @@ The following post is adapted from multiple high-school and college essays I've 
   src="/videos/mario-playing-fast-forwarded.mp4"
 />
 
-Technical Explanation (45 seconds)
-
-Onto the technical explanation, the program is coded in LUA using the FCEUX64 emulator. The connections and hidden nodes are not being shown since there are performance issues if the emulator shows too many lines at once.
+Onto the technical explanation, the program is coded in Lua using the FCEUX64 emulator. The connections and hidden nodes are not being shown since there are performance issues if the emulator shows too many lines at once.
 The program begins with 300 neural networks in generation number 1, which I’ll call genomes. It starts out with no information on how to play the game, but it’ll eventually learn how to move forward.
-This will increase its fitness score which is used to determine if that genome is worthy enough to move on to the next generation, similar to how evolution works. To promote diversity of neural networks, all genomes that are similar to each other are grouped together to optimize their structures.
-The link below the emulator’s screen is the source code if you want to see how I did it.
+This will increase its fitness score which is used to determine if that genome is worthy enough to move on to the next generation, similar to how evolution works. To promote diversity of neural networks, all genomes that are similar to each other are grouped together to optimize their structures. Below is a chart showing the highest fitness score for each generation.
 
 <LineChart
-  title="Highest fitness per generation"
+  title="Highest Fitness/Generation"
   xLabel="Generation ID"
   yLabel="Highest Fitness"
   data={[
@@ -47,3 +44,12 @@ The link below the emulator’s screen is the source code if you want to see how
     { x: 17, y: 3500 },
   ]}
 />
+
+Surprisingly it took only 17 generations to finally reach the goal post, but the project took 7 months to reach this as I was working on this during coronavirus pandemic and I was completely unbeknownst to neural networks and programming in general at the time. I ran into a couple of issues such as deep cloning objects as some objects such as nodes or connections were referencing the previous generation's objects when creating a new generation and I kept reading up on articles and documentation to understand how neural networks work. Another problem was that I couldn't find a way to run multiple genomes at once, so there was only one genome running at a time which definitely hindered the training speed. Below is a video of Mario completing the level with the hidden nodes and positive and negative connections.
+
+<VideoPreview
+  autoplay
+  src="/videos/finished.mp4"
+/>
+
+This is definitely the most complicated and longest project I've ever worked on.
